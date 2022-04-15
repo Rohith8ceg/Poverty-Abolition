@@ -12,9 +12,10 @@ body {
   height: 100vh;
 }
 
+
 .box {
-  border: 1px solid #dfdfdf;
-  background-color: #fff;
+  border: 0.5px solid #08c3e9;
+  background-color: rgba(255,255,255,0.5);
 }
 
 .g-btn {
@@ -35,4 +36,16 @@ body {
 
 #recaptcha-container {
   margin: 20px;
+}
+
+.p-4 box{
+  color: #fafafa;
+}
+
+/* .h4 {
+  color:"#f1f1f1"
+} */
+
+.mb3{
+  color: #be5521;
 }

@@ -5,12 +5,13 @@ import { Button } from "react-bootstrap";
 import GoogleButton from "react-google-button";
 import { useUserAuth } from "../context/UserAuthContext";
 
-const Login = () => {
+const Login = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const { logIn, googleSignIn } = useUserAuth();
   const navigate = useNavigate();
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,8 +37,9 @@ const Login = () => {
   return (
     <>
       <div className="p-4 box">
-        <h2 className="mb-3">Firebase Auth Login</h2>
+        <h2 className="mb-3">Login</h2>
         {error && <Alert variant="danger">{error}</Alert>}
+        <p>{props.user}</p>
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="formBasicEmail">
             <Form.Control
@@ -54,6 +56,20 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Group>
+          {/* <Multiselect
+            options={user_type}
+            singleSelect
+            displayValue="key"
+            onChange=setUser()
+          /> */}
+          {/* <select
+            value="Donor"
+            onChange={(e) => this.setState({ user: e.target.value })}
+          >
+            <option value="Donor">Donor</option>
+            <option value="Radish">Radish</option>
+          </select>
+          <p>{user}</p> */}
 
           <div className="d-grid gap-2">
             <Button variant="primary" type="Submit">
