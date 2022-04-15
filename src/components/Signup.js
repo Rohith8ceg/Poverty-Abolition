@@ -5,13 +5,8 @@ import { Button } from "react-bootstrap";
 import { useUserAuth } from "../context/UserAuthContext";
 import { Multiselect } from "multiselect-react-dropdown";
 import bgImage from "../assets/images/pov3.jpg"
-// import { db } from "../firebase"
-// var firebase = require('firebase/app');
-// require('firebase/auth');
-// var db = require('firebase/database');
-// import firebase from "firebase"
-// import database from './firebase';
 
+import { db } from "../firebaseConfig";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -34,7 +29,8 @@ const Signup = () => {
       email: email,
       type:userType,
     }
-    // firebase.database.ref(`/${userType}`).push(data);
+    // db.ref(`/${userType}`).push(data);
+    db.collection(`/${userType}`).add(data);
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -49,14 +45,7 @@ const Signup = () => {
   };
 
   return (
-    <>
-     {/* <div style={{  
-      backgroundImage: "url(" + bgImage + ")",
-      backgroundPosition: 'center',
-      backgroundSize: 'cover',
-      backgroundRepeat: 'no-repeat',
-    }}> */}
-    
+    <>  
       <div className="p-4 box">
         <h2 className="mb-3">Signup</h2>
         {error && <Alert variant="danger">{error}</Alert>}
