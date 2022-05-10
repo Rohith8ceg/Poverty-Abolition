@@ -4,6 +4,7 @@ import { Form, Alert } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import GoogleButton from "react-google-button";
 import { useUserAuth } from "../context/UserAuthContext";
+import { db } from "../firebaseConfig";
 
 const Login = (props) => {
   const [email, setEmail] = useState("");
@@ -14,11 +15,42 @@ const Login = (props) => {
 
 
   const handleSubmit = async (e) => {
+    var type = ""
+    var username = ""
     e.preventDefault();
     setError("");
+    var data = {};
+    const snapshot_ngo = await db.collection('NGO').get();
+    const snapshot_donor = await db.collection('Donor').get();
+    data["NGO"] = snapshot_ngo.docs.map(doc => doc.data());
+    data["Donor"] = snapshot_donor.docs.map(doc => doc.data());
+    console.log("dataa",data)
+    for (var key in data) {
+      if (data.hasOwnProperty(key)) {
+        var new_data = data[key];
+        for(var new_var in new_data){
+          if(new_data.hasOwnProperty(new_var)){
+            if(new_data[new_var]["email"] === email){
+              console.log(new_data[new_var]["type"]);
+              type = new_data[new_var]["type"];
+              username = new_data[new_var]["user"];
+            }
+          }
+        }
+      }
+    }
     try {
       await logIn(email, password);
-      navigate("/home");
+      if(type == "Donor"){
+        console.log("donor heree");
+        navigate("/donorhome", {user: username});
+      }
+      else if(type == "NGO"){
+        console.log("NGO heree");
+        navigate("/ngohome", {user: username});
+      }
+      else
+        throw "NOTA";
     } catch (err) {
       setError(err.message);
     }
@@ -56,20 +88,7 @@ const Login = (props) => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Group>
-          {/* <Multiselect
-            options={user_type}
-            singleSelect
-            displayValue="key"
-            onChange=setUser()
-          /> */}
-          {/* <select
-            value="Donor"
-            onChange={(e) => this.setState({ user: e.target.value })}
-          >
-            <option value="Donor">Donor</option>
-            <option value="Radish">Radish</option>
-          </select>
-          <p>{user}</p> */}
+          
 
           <div className="d-grid gap-2">
             <Button variant="primary" type="Submit">

@@ -5,6 +5,7 @@ import { Button } from "react-bootstrap";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import { useUserAuth } from "../context/UserAuthContext";
+import { db } from "../firebaseConfig";
 
 const PhoneSignUp = () => {
   const [error, setError] = useState("");
@@ -36,11 +37,45 @@ const PhoneSignUp = () => {
     if (otp === "" || otp === null) return;
     try {
       await result.confirm(otp);
-      navigate("/home");
+      var type = "";
+      var data = {};
+      const snapshot_ngo = await db.collection('NGO').get();
+      const snapshot_donor = await db.collection('Donor').get();
+      data["NGO"] = snapshot_ngo.docs.map(doc => doc.data());
+      data["Donor"] = snapshot_donor.docs.map(doc => doc.data());
+      console.log("dataa",data)
+      for (var key in data) {
+        if (data.hasOwnProperty(key)) {
+          var new_data = data[key];
+          for(var new_var in new_data){
+            if(new_data.hasOwnProperty(new_var)){
+              if(new_data[new_var]["phone"] === number.slice(3)){
+                console.log(new_data[new_var]["type"]);
+                type = new_data[new_var]["type"];
+              }
+            }
+          }
+        }
+      }
+      if(type == "Donor"){
+        console.log("donor heree");
+        navigate("/donorhome");
+      }
+      else if(type == "NGO"){
+        console.log("NGO heree");
+        navigate("/ngohome");
+      }
+      else
+        throw "NOTA";
     } catch (err) {
       setError(err.message);
     }
   };
+
+  const test = () => {
+    console.log(number.slice(3));
+    console.log(number);
+  }
 
   return (
     <>
