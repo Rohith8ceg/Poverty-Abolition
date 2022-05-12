@@ -44,7 +44,7 @@ const Signup = () => {
       await signUp(email, password);
       console.log("Calling adduser", userType);
       addUser();
-      navigate("/", { user: userType });
+      navigate("/ngohome", { user: userType });
     } catch (err) {
       setError(err.message);
     }

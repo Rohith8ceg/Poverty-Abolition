@@ -16,7 +16,7 @@ const NGOHome = () => {
       console.log(error.message);
     }
   };
-
+  console.log("ngo homeeee", user.email)
   // const user_type = [
   //   {key: "Donor"},
   //   {key: "NGO"}
