@@ -22,7 +22,8 @@ const DonorHome = ({ route }) => {
   //   {key: "NGO"}
   // ]
   console.log(route);
-
+  console.log(user.email);
+  window.localStorage.setItem("email",user.email);
   const donation_category = [
     { key: "Cooked", category: "Food" },
     { key: "Raw materials", category: "Food" },

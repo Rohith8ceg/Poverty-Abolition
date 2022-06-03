@@ -2,15 +2,21 @@ import React, { useState } from "react";
 import { db } from "../firebaseConfig";
 import { useUserAuth } from "../context/UserAuthContext";
 import { Multiselect } from "multiselect-react-dropdown";
+import {useLocation} from "react-router-dom";
+
+
 
 class DonorPost extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      formValues: [{ category: "", description: "", quantity: "" }]
+      formValues: [{ category: "", description: "", quantity: "" }],
+      // user: useLocation().state,
     };
     this.handleSubmit = this.handleSubmit.bind(this)
   }
+
+  
 
   handleChange(i, e) {
     let formValues = this.state.formValues;
@@ -23,8 +29,6 @@ class DonorPost extends React.Component {
       formValues: [...this.state.formValues, { category: "", description: "", quantity: "" }]
     }))
   }
-
-  // let user = useUserAuth();
 
   removeFormFields(i) {
     let formValues = this.state.formValues;
@@ -44,9 +48,10 @@ class DonorPost extends React.Component {
   // }
 
   handleSubmit(event) {
+    // console.log( useLocation().state);
     var post = [];
     event.preventDefault();
-    console.log(this.state.formValues);
+    console.log(this.state.formValues.length);
     // for (var i in this.state.formValues) {
     //   let item = {
     //     category: this.state.formValues[i].category,
@@ -56,9 +61,12 @@ class DonorPost extends React.Component {
     //   post.push(item);
     // }
     // console.log(post);
+    var test_json = {};
+    var email = window.localStorage.getItem("email");
+    test_json[email] = this.state.formValues;
     db.collection("Donations")
     // for (var i in this.state.formValues) {
-      .push(this.state.formValues)
+      .add(test_json)
       .then((res) => {
         console.log("posted");
       });

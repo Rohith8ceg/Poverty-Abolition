@@ -27,7 +27,7 @@ import {
 
 import HomeIcon from "@material-ui/icons/Home";
 import QueueIcon from '@material-ui/icons/Queue';
-import MapIcon from '@material-ui/icons/Map';
+import HistoryIcon from '@material-ui/icons/History';
 import DraftsIcon from '@material-ui/icons/Drafts';
 import LogoutIcon from '@material-ui/icons/Input';
 import DonorPost from "./components/DonorPost";
@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 const App = () => {
   const { logOut, user } = useUserAuth();
+  // const email = user.email;
   const navigate = useNavigate();
   const [usertype,setUsertype] = useState("");
   // console.log("-----",user.uid)
@@ -111,12 +112,20 @@ const App = () => {
               <ListItemText primary={"Home"} />
             </ListItem>
           </Link>
-          <Link to="/donorpost" className={classes.link}>
+          <Link to={{pathname: "/donorpost", state: { email: user.email} }} className={classes.link}>
             <ListItem button>
               <ListItemIcon>
                 <QueueIcon />
               </ListItemIcon>
               <ListItemText primary={"Post"} />
+            </ListItem>
+          </Link>
+          <Link to="#" className={classes.link}>
+            <ListItem button>
+              <ListItemIcon>
+                <HistoryIcon />
+              </ListItemIcon>
+              <ListItemText primary={"History"} />
             </ListItem>
           </Link></>}
           
@@ -128,12 +137,12 @@ const App = () => {
               <ListItemText primary={"Home"} />
             </ListItem>
           </Link>
-         <Link to="/ngopost" className={classes.link}>
+         <Link to="#" className={classes.link}>
             <ListItem button>
               <ListItemIcon>
-                <QueueIcon />
+                <HistoryIcon />
               </ListItemIcon>
-              <ListItemText primary={"Post"} />
+              <ListItemText primary={"History"} />
             </ListItem>
           </Link></>}
           {/* <Link to="/track" className={classes.link}>
@@ -163,7 +172,7 @@ const App = () => {
       </Drawer>
 }
 
-    <Container style={{ width: "400px" }}>
+    <Container style={{ width: "400px",  }}>
       <Row>
         <Col>
           <UserAuthContextProvider>
