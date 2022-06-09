@@ -28,11 +28,13 @@ import {
 import HomeIcon from "@material-ui/icons/Home";
 import QueueIcon from '@material-ui/icons/Queue';
 import HistoryIcon from '@material-ui/icons/History';
-import DraftsIcon from '@material-ui/icons/Drafts';
+import FindInPageIcon from '@material-ui/icons/FindInPage';
 import LogoutIcon from '@material-ui/icons/Input';
 import DonorPost from "./components/DonorPost";
+import DonorHistory from "./components/DonorHistory";
 import NGOPost from "./components/NGOPost";
 import { db } from "./firebaseConfig";
+import DonorTrack from "./components/DonorTrack";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -120,7 +122,15 @@ const App = () => {
               <ListItemText primary={"Post"} />
             </ListItem>
           </Link>
-          <Link to="#" className={classes.link}>
+          <Link to={{pathname: "/donortrack", state: { email: user.email} }} className={classes.link}>
+            <ListItem button>
+              <ListItemIcon>
+                <FindInPageIcon/>
+              </ListItemIcon>
+              <ListItemText primary={"Track"} />
+            </ListItem>
+          </Link>
+          <Link to={{pathname: "/donorhistory", state: { email: user.email} }} className={classes.link}>
             <ListItem button>
               <ListItemIcon>
                 <HistoryIcon />
@@ -189,6 +199,8 @@ const App = () => {
               <Route path="/ngohome" element={<ProtectedRoute><NGOHome /></ProtectedRoute>} />
               <Route path="/donorhome" element={<ProtectedRoute><DonorHome /></ProtectedRoute>} />
               <Route path="/donorpost" element={<ProtectedRoute><DonorPost /></ProtectedRoute>} />
+              <Route path="/donortrack" element={<ProtectedRoute><DonorTrack /></ProtectedRoute>} />
+              <Route path="/donorhistory" element={<ProtectedRoute><DonorHistory /></ProtectedRoute>} />
               <Route path="/ngopost" element={<ProtectedRoute><NGOPost /></ProtectedRoute>} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/phonesignup" element={<PhoneSignUp />} />

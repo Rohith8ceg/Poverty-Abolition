@@ -6,7 +6,7 @@ import { Multiselect } from "multiselect-react-dropdown";
 import { db } from "../firebaseConfig";
 
 const NGOHome = () => {
-  
+
   // getDonations();
   // useEffect(() => {
   //   let ignore = false;
@@ -19,24 +19,12 @@ const NGOHome = () => {
   useEffect(() => {
     console.log("in useeffectttt");
     getDonations();
-    console.log("Dataaa",data)
+    console.log("Dataaa", data)
   })
-  const [tdata,setData] = useState(data);
+  const [tdata, setData] = useState(data);
 
   const { logOut, user } = useUserAuth();
-  // var data = [{
-  //   "category": "Food",
-  //   "description": "Raw food",
-  //   "id": "j8INRnioVE2AnAzQtuNb",
-  //   "quantity": "1kg",
-  // },
-  // {
-  //   "category": "Clothes",
-  //   "description": "Shirt and pant",
-  //   "id": "j8INRnioVE2AnAzQtuNb",
-  //   "quantity": "4",
-  // },
-  // ];
+  window.localStorage.setItem("email",user.email);
 
   const navigate = useNavigate();
   const handleLogout = async () => {
@@ -54,32 +42,50 @@ const NGOHome = () => {
       .collection("Donations")
       .get()
       .then((res) => {
-        //data = [];
-        var db_data = res.docs[0].data(0);
-        for(var key in db_data){
-          console.log(db_data[key]);
-          var i = 0;
-          for(var item in db_data[key]){
-              db_data[key][item]["id"] = item;
-              console.log("____",db_data[key][item])
-              data.push(db_data[key][item]);
-              i += 1;
+        var i = 0;
+        var index = 0;
+        console.log(res.docs.length);
+        var length = res.docs.length;
+        while (length--) {
+          var db_data = res.docs[i].data();
+          for (var id in db_data) {
+            console.log(id);
+            if (db_data["status"] == "0" && id.includes("@gmail.com")) {
+              for (var item in db_data[id]) {
+                db_data[id][item]["id"] = index;
+                data.push(db_data[id][item]);
+                console.log(db_data[id][item]);
+                index++;
+              }
             }
-
-          // db_data[key]["id"] = key;
-          // console.log("____",db_data[key]["id"]);
-          // data.push(db_data[key]);
+          }
+          i++;
         }
-        // console.log("----",db_data["donation_list"]);
-        // var i = 0;
-        // for(var item in db_data["donation_list"]){
-        //   db_data["donation_list"][item]["id"] = i;
-        //   console.log("____",db_data["donation_list"][item])
-        //   data.push(db_data["donation_list"][item]);
-        //   i += 1;
-        // }
-        console.log("---data",data);
+        console.log(data);
       })
+  }
+
+  async function confirmOrder(){
+    await db
+    .collection("NGO")
+    .get()
+    .then((res) => {
+      // console.log(item);
+        var i = 0;
+        var index=0;
+        var length=res.docs.length;
+        var email= window.localStorage.getItem("email");
+        var data=[];
+        while (length--) {
+          var db_data = res.docs[i].data();
+          console.log(db_data["email"]);
+          if(db_data["email"]==email){
+            //add the selected item to history 
+          }
+        }
+        //change the status in the donation node.
+        console.log(data);
+    });
   }
 
   function Card(props) {
@@ -90,8 +96,8 @@ const NGOHome = () => {
           <h2 >{props.itemData.category}</h2>
           <p >{props.itemData.description}</p>
           <p >{props.itemData.quantity}</p>
-          <Button>Take this order</Button>
-          <br/><br/>
+          <Button onClick={confirmOrder}>Take this order</Button>
+          <br /><br />
         </div>
       </div>
     );
