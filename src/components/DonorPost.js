@@ -55,11 +55,18 @@ class DonorPost extends React.Component {
     var post = [];
     event.preventDefault();
     console.log(this.state.formValues.length);
+    const hex = '0123456789ABCDEF';
+    let output = '';
+    for (let i = 0; i < 10; ++i) {
+        output += hex.charAt(Math.floor(Math.random() * hex.length));
+    }
     var test_json = {};
     var email = window.localStorage.getItem("email");
+    console.log(this.state.packageId);
     test_json[email] = this.state.formValues;
     test_json["status"] = 0;
     test_json["location"] = this.state.location;
+    test_json["package_id"] = output;
     db.collection("Donations")
       .add(test_json)
       .then((res) => {
@@ -67,6 +74,7 @@ class DonorPost extends React.Component {
       });
     alert(JSON.stringify(this.state.formValues));
     console.log(this.state.formValues);
+    window.location.reload();
   }
 
   render() {

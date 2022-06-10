@@ -30,11 +30,14 @@ import QueueIcon from '@material-ui/icons/Queue';
 import HistoryIcon from '@material-ui/icons/History';
 import FindInPageIcon from '@material-ui/icons/FindInPage';
 import LogoutIcon from '@material-ui/icons/Input';
+import DirectionsBikeIcon from '@material-ui/icons/DirectionsBike';
 import DonorPost from "./components/DonorPost";
 import DonorHistory from "./components/DonorHistory";
 import NGOPost from "./components/NGOPost";
 import { db } from "./firebaseConfig";
 import DonorTrack from "./components/DonorTrack";
+import NGODelivery from "./components/NGODelivery";
+import NGOHistory from "./components/NGOHistory";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -147,7 +150,15 @@ const App = () => {
               <ListItemText primary={"Home"} />
             </ListItem>
           </Link>
-         <Link to="#" className={classes.link}>
+          <Link to="/ngodelivery" className={classes.link}>
+            <ListItem button>
+              <ListItemIcon>
+                <DirectionsBikeIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Delivery"} />
+            </ListItem>
+          </Link>
+         <Link to="/ngohistory" className={classes.link}>
             <ListItem button>
               <ListItemIcon>
                 <HistoryIcon />
@@ -155,22 +166,6 @@ const App = () => {
               <ListItemText primary={"History"} />
             </ListItem>
           </Link></>}
-          {/* <Link to="/track" className={classes.link}>
-            <ListItem button>
-              <ListItemIcon >
-                <MapIcon />
-              </ListItemIcon>
-              <ListItemText primary={"Tracking"} />
-            </ListItem>
-          </Link>
-          <Link to="/donations" className={classes.link}>
-            <ListItem button>
-              <ListItemIcon >
-                <DraftsIcon />
-              </ListItemIcon>
-              <ListItemText primary={"All Donations"} />
-            </ListItem>
-          </Link>    */}
           <ListItem button onClick={handleLogout}>
             <ListItemIcon>
               <LogoutIcon />
@@ -202,6 +197,8 @@ const App = () => {
               <Route path="/donortrack" element={<ProtectedRoute><DonorTrack /></ProtectedRoute>} />
               <Route path="/donorhistory" element={<ProtectedRoute><DonorHistory /></ProtectedRoute>} />
               <Route path="/ngopost" element={<ProtectedRoute><NGOPost /></ProtectedRoute>} />
+              <Route path="/ngodelivery" element={<ProtectedRoute><NGODelivery /></ProtectedRoute>} />
+              <Route path="/ngohistory" element={<ProtectedRoute><NGOHistory /></ProtectedRoute>} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/phonesignup" element={<PhoneSignUp />} />
                            

@@ -47,7 +47,7 @@ const DonorTrack = () => {
                     for (var id in db_data) {
                         if (id == email && db_data["status"] == status) {
                             for (var item in db_data[id]) {
-                                db_data[id][item]["id"] = index;
+                                db_data[id][item]["id"] = db_data["package_id"];
                                 data.push(db_data[id][item]);
                                 console.log(db_data[id][item]);
                                 index++;
@@ -62,12 +62,15 @@ const DonorTrack = () => {
     }
 
     function Card(props) {
+        console.log(props.itemData);
         return (
             <div>
                 <div className="p-01 box mt-3 text-center" >
                     <h2 >{props.itemData.category}</h2>
-                    <p >{props.itemData.description}</p>
-                    <p >{props.itemData.quantity}</p>
+                    <p><b>Order Id</b> - {props.itemData.id}</p>
+                    <p ><b>Description</b> - {props.itemData.description}</p>
+                    <p ><b>Quantity</b> - {props.itemData.quantity}</p>
+
                 </div>
             </div>
         );
