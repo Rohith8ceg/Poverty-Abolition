@@ -138,7 +138,7 @@ const NGOHome = () => {
       </div>
       <br />
       <br/><br/>
-      <center><h2>Available Donations</h2></center>
+      <center><h2><br/><br/><br/><br/><br/><br/><br/><br/>Available Donations</h2></center>
       <div>
         {tdata.map((item) => {
           return <Card itemData={item} />

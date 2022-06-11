@@ -74,23 +74,23 @@ class DonorPost extends React.Component {
       });
     alert(JSON.stringify(this.state.formValues));
     console.log(this.state.formValues);
-    window.location.reload();
+    //window.location.reload();
   }
 
   render() {
     return (
       <>
-      <label>Your Location</label>
+      <label>Your Location: &nbsp; &nbsp; &nbsp; &nbsp;</label>
       <input type="text" value={this.state.location} onChange={this.handleChangeLocation} />
       <form onSubmit={this.handleSubmit}>
         {this.state.formValues.map((element, index) => (
           <div className="form-inline" key={index}><br/>
-            <label>Category</label>
-            <input type="text" name="category" value={element.category || ""} onChange={e => this.handleChange(index, e)} /><br/>
-            <label>Description</label>
-            <input type="text" name="description" value={element.description || ""} onChange={e => this.handleChange(index, e)} /><br/>
-            <label>Quantity</label>
-            <input type="text" name="quantity" value={element.quantity || ""} onChange={e => this.handleChange(index, e)} /><br/>
+            <label>Category: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
+            <input type="text" name="category" value={element.category || ""} onChange={e => this.handleChange(index, e)} /><br/><br/>
+            <label>Description:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </label>
+            <input type="text" name="description" value={element.description || ""} onChange={e => this.handleChange(index, e)} /><br/><br/>
+            <label>Quantity:&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp; </label>
+            <input type="text" name="quantity" value={element.quantity || ""} onChange={e => this.handleChange(index, e)} /><br/><br/>
             {
               index ?
                 <button type="button" className="button remove" onClick={() => this.removeFormFields(index)}>Remove</button>
